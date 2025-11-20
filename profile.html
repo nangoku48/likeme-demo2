@@ -1,0 +1,197 @@
+<!-- profile.html : プロフィール＆フィードのデモ画面 -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>LikeMe デモフィード</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="profile-page">
+  <div class="page-container">
+    <header class="page-header">
+      <a id="backHome" href="home.html" class="back-link">← 戻る</a>
+      <div class="header-center-title">VoteMe ダッシュボード</div>
+      <div class="wallet-info">
+        <span class="wallet-label">接続中</span>
+        <span id="connectedAddress" class="wallet-address">読込み中…</span>
+      </div>
+    </header>
+
+    <!-- 2カラム構成のメインエリア -->
+    <main class="profile-main">
+      <!-- 左カラム: フィード -->
+      <div class="feed-column">
+        <article class="feed-card">
+          <header class="feed-header">
+            <div class="feed-avatar"><span>YM</span></div>
+            <div class="feed-user-info">
+              <div class="feed-username">@your_account</div>
+              <div class="feed-time">2時間前</div>
+            </div>
+            <div class="feed-more">⋯</div>
+          </header>
+
+          <div class="feed-media">
+            <!-- 1枚の写真に変更 -->
+            <img
+              src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80"
+              alt="プールサイドに立つロングヘアの女性の後ろ姿"
+              class="feed-img"
+            />
+          </div>
+
+          <div class="feed-actions">
+            <button class="btn vote-btn">🎟️ Vote (0.1 USDC)</button>
+            <button class="icon-btn">💬</button>
+            <button class="icon-btn">🔗</button>
+            <button class="icon-btn">📌</button>
+          </div>
+
+          <div class="feed-notification">
+            <span class="notification-badge">+100 VOTE</span>
+            <span class="notification-text">投稿ボーナス獲得済み</span>
+          </div>
+
+          <footer class="feed-stats-footer">
+            ❤️ いいね 230・収益: $15.50
+          </footer>
+        </article>
+      </div>
+
+      <!-- 右カラム: サイドバー -->
+      <aside class="sidebar-column">
+        <section class="sidebar-card profile-card">
+          <div class="profile-avatar"></div>
+          <div class="profile-name">あなたのアカウント</div>
+          <div class="profile-handle">@your_account</div>
+        </section>
+
+        <section class="sidebar-card stats-card">
+          <div class="stats-label">総収益</div>
+          <div class="stats-value">$280</div>
+        </section>
+
+        <section class="sidebar-card stats-card">
+          <div class="stats-label">保有NFT</div>
+          <div class="stats-value">58</div>
+        </section>
+
+        <section class="sidebar-card ranking-card">
+          <h2 class="ranking-title">🏆 自分の投稿 Top 3</h2>
+          <ul class="ranking-list">
+            <li>
+              <span class="rank-num">1</span>
+              <div class="rank-post-thumb" style="background-image: url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=200')"></div>
+              <span>❤️ 230</span>
+            </li>
+            <li>
+              <span class="rank-num">2</span>
+              <div class="rank-post-thumb" style="background-image: url('https://images.unsplash.com/photo-1579503841516-e0bd7fca5faa?q=80&w=200')"></div>
+              <span>❤️ 198</span>
+            </li>
+            <li>
+              <span class="rank-num">3</span>
+              <div class="rank-post-thumb" style="background-image: url('https://images.unsplash.com/photo-1542042161-d19577987127?q=80&w=200')"></div>
+              <span>❤️ 155</span>
+            </li>
+          </ul>
+        </section>
+      </aside>
+    </main>
+
+    <button id="logoutBtn" class="logout-btn">
+      ログアウト
+    </button>
+  </div>
+
+  <script src="https://xumm.app/assets/cdn/xumm.min.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const account = params.get("account");
+    const addrEl = document.getElementById("connectedAddress");
+    if (account) {
+      addrEl.textContent = account.substring(0, 10) + "...";
+    } else {
+      addrEl.textContent = "未接続";
+    }
+
+    const backHome = document.getElementById("backHome");
+    const q = account ? "?account=" + encodeURIComponent(account) : "";
+    backHome.href = "home.html" + q;
+
+    const xumm = new Xumm("bedbb175-1ab7-4fc8-a321-08d00ad4a1a5");
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      try { await xumm.logout(); } catch (e) { console.warn(e); }
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>
+        </div>
+        <div class="insta-bio">
+          <b>あなたのアカウント</b><br>
+          LikeMeでWeb3なSNSライフを楽しむ！<br>
+          #SelfieToEarn #XRPL
+        </div>
+      </div>
+    </header>
+
+    <!-- Instagram風の写真グリッド -->
+    <main class="insta-grid">
+      <!-- 投稿写真のダミーを6つ配置 -->
+      <div class="insta-post">
+        <img src="https://picsum.photos/id/1025/300/300" alt="投稿写真">
+        <div class="insta-post-overlay"><span>❤️ 150</span> <span>💬 12</span></div>
+      </div>
+      <div class="insta-post">
+        <img src="https://picsum.photos/id/102/300/300" alt="投稿写真">
+        <div class="insta-post-overlay"><span>❤️ 230</span> <span>💬 25</span></div>
+      </div>
+      <div class="insta-post">
+        <img src="https://picsum.photos/id/237/300/300" alt="投稿写真">
+        <div class="insta-post-overlay"><span>❤️ 180</span> <span>💬 5</span></div>
+      </div>
+      <div class="insta-post">
+        <img src="https://picsum.photos/id/10/300/300" alt="投稿写真">
+        <div class="insta-post-overlay"><span>❤️ 310</span> <span>💬 40</span></div>
+      </div>
+      <div class="insta-post">
+        <img src="https://picsum.photos/id/433/300/300" alt="投稿写真">
+        <div class="insta-post-overlay"><span>❤️ 98</span> <span>💬 8</span></div>
+      </div>
+      <div class="insta-post">
+        <img src="https://picsum.photos/id/593/300/300" alt="投稿写真">
+        <div class="insta-post-overlay"><span>❤️ 450</span> <span>💬 55</span></div>
+      </div>
+    </main>
+
+    <button id="logoutBtn" class="logout-btn">
+      ログアウト（Xaman を切断して戻る）
+    </button>
+  </div>
+
+  <!-- ページ下部のスクリプト部分は変更なし -->
+  <script src="https://xumm.app/assets/cdn/xumm.min.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const account = params.get("account");
+    const addrEl = document.getElementById("connectedAddress");
+    if (account) {
+      addrEl.textContent = account.substring(0, 10) + "...";
+    } else {
+      addrEl.textContent = "未接続";
+    }
+
+    // 戻るリンクに account を付けてホームへ
+    const backHome = document.getElementById("backHome");
+    const q = account ? "?account=" + encodeURIComponent(account) : "";
+    backHome.href = "home.html" + q;
+
+    const xumm = new Xumm("bedbb175-1ab7-4fc8-a321-08d00ad4a1a5");
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      try { await xumm.logout(); } catch (e) { console.warn(e); }
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>

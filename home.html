@@ -1,0 +1,91 @@
+<!-- home.html : LikeMe ランディング（赤いトップ） -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>LikeMe ホーム</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="landing">
+  <div class="landing-container">
+    <!-- ロゴ画像のHTML（クラス名を変更） -->
+    <div class="left-logo">
+      <img src="images/likeme-logo.png" alt="LikeMe Logo">
+    </div>
+
+    <header class="landing-header">
+      <div class="logo-area">
+        <span class="logo-mark">LikeMe</span>
+        <span class="beta-tag">beta</span>
+      </div>
+      <div class="wallet-info">
+        <span class="wallet-label">接続中アドレス</span>
+        <span id="connectedAddress" class="wallet-address">読み込み中…</span>
+      </div>
+    </header>
+
+    <!-- 文章部分にクラスを追加 -->
+    <div class="landing-text-block">
+      <div class="hero-text">
+        <h1 class="landing-title">「好き」が、お金になる</h1>
+        <p class="landing-sub">
+          写真や投稿に「Like」を集めて、クリエイターもファンも報酬がもらえる<br>
+          新しいソーシャルリワードサービス「LikeMe」デモ版。
+        </p>
+        <div class="landing-buttons">
+          <a id="demoLink" href="#" class="btn primary">デモを体験する</a>
+          <a id="moreLink" href="#" class="btn secondary">詳しく見る</a>
+        </div>
+        <p class="landing-note">
+          ※ この画面はデモ用のモックです。
+        </p>
+      </div>
+    </div>
+
+    <button id="logoutBtn" class="logout-btn">
+      ログアウト（Xaman を切断して戻る）
+    </button>
+  </div>
+
+  <!-- 必要なら Xumm SDK を読み込んで logout だけ使う -->
+  <script src="https://xumm.app/assets/cdn/xumm.min.js"></script>
+  <script>
+    // ▼ URL からアカウント取得
+    const params = new URLSearchParams(window.location.search);
+    const account = params.get("account");
+
+    // 上部のアドレス表示
+    const addrEl = document.getElementById("connectedAddress");
+    if (account) {
+      const short = account.substring(0, 10) + "...";
+      addrEl.textContent = short;
+    } else {
+      addrEl.textContent = "未接続";
+    }
+
+    // ボタンのリンク先に account を付けて引き回す
+    const demoLink = document.getElementById("demoLink");
+    const moreLink = document.getElementById("moreLink");
+
+    const accountQuery = account
+      ? "?account=" + encodeURIComponent(account)
+      : "";
+
+    demoLink.href = "profile.html" + accountQuery;
+    moreLink.href = "features.html" + accountQuery;
+
+    // Xumm インスタンス（ログアウト用だけ）
+    const xumm = new Xumm("bedbb175-1ab7-4fc8-a321-08d00ad4a1a5");
+
+    // ログアウトボタン
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      try {
+        await xumm.logout(); // Xaman 側のセッションも切る
+      } catch (e) {
+        console.warn("logout でエラー（無視してOK）", e);
+      }
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>

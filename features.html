@@ -1,0 +1,128 @@
+<!-- features.html : LikeMe の仕組み説明ページ -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LikeMe の仕組み</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="features-page">
+  <!-- ページ共通ヘッダー（戻るボタンなど） -->
+  <header class="page-header">
+    <a id="backHome" href="home.html" class="back-link">← 戻る</a>
+    <div class="wallet-info">
+      <span class="wallet-label">接続中</span>
+      <span id="connectedAddress" class="wallet-address">読込み中…</span>
+    </div>
+  </header>
+
+  <section class="header-section">
+    <h1>LikeMeの仕組み</h1>
+    <p class="subtitle">写真を投稿して稼ぐ、投票して稼ぐ、全く新しいSNSエコシステム</p>
+  </section>
+
+  <div class="tabs">
+    <div class="tab-item active">特徴</div>
+    <div class="tab-item">収益モデル</div>
+    <div class="tab-item">安全性</div>
+  </div>
+
+  <div class="container">
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="icon-wrapper"><i class="fa-solid fa-camera"></i></div>
+        <h3>投稿ボーナス</h3>
+        <p>写真を投稿するだけで即座に100 VOTEトークンを獲得。投票が集まればさらに収益アップ！</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon-wrapper"><i class="fa-solid fa-check-to-slot"></i></div>
+        <h3>投票リワード</h3>
+        <p>1票0.1 USDCで投票。投票するたびにポイント獲得＆NFT抽選のチャンス！</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon-wrapper"><i class="fa-solid fa-gem"></i></div>
+        <h3>NFTマーケット</h3>
+        <p>レアNFTを獲得して売買可能。限定アイテムは高額取引のチャンス！</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon-wrapper"><i class="fa-solid fa-rocket"></i></div>
+        <h3>初心者にやさしい</h3>
+        <p>Web3の知識不要。メール登録だけで始められる簡単スタート！</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon-wrapper"><i class="fa-regular fa-credit-card"></i></div>
+        <h3>カード決済対応</h3>
+        <p>仮想通貨を持っていなくてもクレジットカードで直接投票可能！</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon-wrapper"><i class="fa-solid fa-trophy"></i></div>
+        <h3>ランキング報酬</h3>
+        <p>上位ランカーには特別ボーナス＆限定NFT配布！</p>
+      </div>
+    </div>
+
+    <section class="steps-section">
+      <h2>始め方は簡単3ステップ</h2>
+      <div class="steps-container">
+        <!-- ※いただいたコードがここで途切れていたため、ダミーのステップを配置しています -->
+        <div class="step-item">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>アカウント登録</h3>
+            <p>Xamanウォレットを接続して簡単ログイン。</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>写真を投稿</h3>
+            <p>お気に入りのセルフィーを投稿してバトルに参加。</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>投票＆収益化</h3>
+            <p>他の人の投稿に投票したり、自分の投稿で「Like」を集めて稼ごう！</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="cta-area">
+      <a href="profile.html" id="ctaProfileLink" class="btn btn-white">プロフィールへ</a>
+      <button id="logoutBtn" class="btn btn-outline">ログアウト</button>
+    </div>
+  </div>
+
+  <script src="https://xumm.app/assets/cdn/xumm.min.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const account = params.get("account");
+    const q = account ? "?account=" + encodeURIComponent(account) : "";
+
+    const addrEl = document.getElementById("connectedAddress");
+    if (account) {
+      addrEl.textContent = account.substring(0, 10) + "...";
+    } else {
+      addrEl.textContent = "未接続";
+    }
+
+    // リンクにアカウント情報を引き継ぐ
+    const backHome = document.getElementById("backHome");
+    backHome.href = "home.html" + q;
+    document.getElementById("ctaProfileLink").href = "profile.html" + q;
+
+    const xumm = new Xumm("bedbb175-1ab7-4fc8-a321-08d00ad4a1a5");
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      try { await xumm.logout(); } catch (e) { console.warn(e); }
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>
