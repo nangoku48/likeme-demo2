@@ -100,29 +100,8 @@
     </div>
   </div>
 
+  <!-- JavaScriptの処理は script.js にまとめる -->
   <script src="https://xumm.app/assets/cdn/xumm.min.js"></script>
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const account = params.get("account");
-    const q = account ? "?account=" + encodeURIComponent(account) : "";
-
-    const addrEl = document.getElementById("connectedAddress");
-    if (account) {
-      addrEl.textContent = account.substring(0, 10) + "...";
-    } else {
-      addrEl.textContent = "未接続";
-    }
-
-    // リンクにアカウント情報を引き継ぐ
-    const backHome = document.getElementById("backHome");
-    backHome.href = "home.html" + q;
-    document.getElementById("ctaProfileLink").href = "profile.html" + q;
-
-    const xumm = new Xumm("bedbb175-1ab7-4fc8-a321-08d00ad4a1a5");
-    document.getElementById("logoutBtn").addEventListener("click", async () => {
-      try { await xumm.logout(); } catch (e) { console.warn(e); }
-      window.location.href = "index.html";
-    });
-  </script>
+  <script defer src="script.js"></script>
 </body>
 </html>

@@ -47,45 +47,8 @@
     </button>
   </div>
 
-  <!-- 必要なら Xumm SDK を読み込んで logout だけ使う -->
+  <!-- JavaScriptの処理は script.js にまとめる -->
   <script src="https://xumm.app/assets/cdn/xumm.min.js"></script>
-  <script>
-    // ▼ URL からアカウント取得
-    const params = new URLSearchParams(window.location.search);
-    const account = params.get("account");
-
-    // 上部のアドレス表示
-    const addrEl = document.getElementById("connectedAddress");
-    if (account) {
-      const short = account.substring(0, 10) + "...";
-      addrEl.textContent = short;
-    } else {
-      addrEl.textContent = "未接続";
-    }
-
-    // ボタンのリンク先に account を付けて引き回す
-    const demoLink = document.getElementById("demoLink");
-    const moreLink = document.getElementById("moreLink");
-
-    const accountQuery = account
-      ? "?account=" + encodeURIComponent(account)
-      : "";
-
-    demoLink.href = "profile.html" + accountQuery;
-    moreLink.href = "features.html" + accountQuery;
-
-    // Xumm インスタンス（ログアウト用だけ）
-    const xumm = new Xumm("bedbb175-1ab7-4fc8-a321-08d00ad4a1a5");
-
-    // ログアウトボタン
-    document.getElementById("logoutBtn").addEventListener("click", async () => {
-      try {
-        await xumm.logout(); // Xaman 側のセッションも切る
-      } catch (e) {
-        console.warn("logout でエラー（無視してOK）", e);
-      }
-      window.location.href = "index.html";
-    });
-  </script>
+  <script defer src="script.js"></script>
 </body>
 </html>

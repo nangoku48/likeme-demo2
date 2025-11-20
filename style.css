@@ -245,11 +245,6 @@ body.landing {
   margin-bottom: 18px;
   justify-content: flex-end; /* ボタンを右寄せにする */
 }
-.landing-buttons {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 18px;
-}
 .landing-stats {
   display: flex;
   gap: 16px;
